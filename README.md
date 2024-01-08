@@ -7,11 +7,14 @@ python app.py
 ``
 
 ### Supported Modules 
+ - resource
+ - folder
+ - url
+ - page
+### Unupported Modules 
  - forum
  - unilabel
- - folder
  - assign
- - page
  - choice
  - label
  - quiz
