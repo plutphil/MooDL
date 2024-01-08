@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSE Template</title>
+</head>
+<body>
+<h1>SSE Test</h1>
+<div id="sse-data"></div>
+
+<script>
+    var eventSource;
+    const myload =()=>{
+        
+        eventSource = new EventSource('/stream');
+        const sseData = document.getElementById('sse-data');
+        sseData.innerText = "waiting"
+        eventSource.onmessage = function (event) {
+            console.log(event)
+            sseData.innerText = event.data;
+
+            const data = JSON.parse(event.data);
+            sseData.innerHTML = `Client ID: ${data.id}, Data: ${data.data}`;
+        };
+
+        eventSource.onerror = function (error) {
+            setTimeout(myload,1000);
+            console.error('EventSource failed:', error);
+            eventSource.close();
+        };
+    
+    }
+    window.addEventListener("load",myload);
+</script>
+
+</body>
+</html>

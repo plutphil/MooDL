@@ -1,0 +1,7 @@
+cache/
+static/
+config/
+__pycache__/
+.pyc
+.vscode
+course_data.json

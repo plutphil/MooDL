@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{course.shortname}} - {{course.fullname}}</title>
+</head>
+<body>
+    <h1>{{course.shortname}} - {{course.fullname}}</h1>
+    <ul>
+        {% for section in data %}
+            <li>
+                <h2>{{ section.name }}</h2>
+                <p>{{ section.summary | safe }}</p>
+                <ul>
+                    {% for module in section.modules %}
+                        <li>
+                            
+                            <a href="{{ module.url }}" target="_blank">{{ module.name| safe }}</a>
+                            <br><small>{{module.modname}}</small>
+                            {% if module.contents %}
+                                <ul>
+                                    {% for content in module.contents %}
+                                        <li>
+                                            {% if content.staticurl %}
+                                            <a href="{{ content.staticurl }}" target="_blank">{{ content.filename }}</a>
+                                            {% else %}
+                                            <a href="{{ content.fileurl }}" target="_blank">{{ content.filename }}</a>
+                                            {% endif %}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                            {% if module.modurl %}
+                                {% if module.modurl.intro %}
+                                {{module.modurl.intro|safe}}
+                                {% endif %}
+                                {% if module.modurl.externalurl %}
+                                <a href="{{ module.modurl.externalurl }}" target="_blank">External URL{{ module.url.externalurl }}</a>
+                                {% endif %}
+                            {% endif %}
+
+                            {% if module.description %}
+                                {{ module.description|safe }}
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

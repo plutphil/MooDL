@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <h2>MooDL - Dashboard</h2>
+    <ul>
+    {% for course in courses %}
+        <li><a href="/c/{{ course.id }}">{{ course.fullname }}</a></li>
+    {% endfor %}
+    </ul>
+    <table>
+    <style>
+        .imgtd{
+            vertical-align: top;
+        }
+        td{
+            border: 1px solid #000;
+            padding:5px;
+        }
+    </style>
+    {% for course in courses %}
+        <tr>
+            <td class="imgtd">
+                    <a href="/c/{{ course.id }}">
+                        <img style="width:100%;max-width:200px;min-height"src="{{ url_for('serve_image', filename=course.local_image_path) }}" alt="{{ course.fullname }} Image">
+                    </a>
+            </td>
+            <td>
+                <h3>{{ course.fullname }}</h3>
+                <p>
+                    {{ course.summary|safe }}
+                    <br>
+                    <a href="/c/{{ course.id }}">View Course</a><small>Start Date: {{ course.formatted_startdate }}</small>
+                    <small>Category: {{ course.coursecategory }}</small>
+                </p>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+</body>
+</html>
